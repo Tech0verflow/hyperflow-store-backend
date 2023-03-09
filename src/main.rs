@@ -39,8 +39,8 @@ fn main() {
                     eprintln!("Error: No package name provided");
                 } else {
                     let package_name = &args[2];
-                    let output = Command::new("sudo")
-                        .arg("apt")
+                    let output = Command::new("apt")
+                        // .arg("apt")
                         .arg("install")
                         .arg("-y")
                         .arg(package_name)
@@ -57,6 +57,20 @@ fn main() {
                     let package_name = &args[2];
                     let output = Command::new("apt")
                         .arg("search")
+                        .arg(package_name)
+                        .output()
+                        .expect("Failed to execute command");
+                    println!("{}", String::from_utf8_lossy(&output.stdout));
+                }
+            }
+            "remove" => {
+                // Implement 'remove' command
+                if args.len() < 3 {
+                    eprintln!("Error: No package name provided");
+                } else {
+                    let package_name = &args[2];
+                    let output = Command::new("apt")
+                        .arg("remove")
                         .arg(package_name)
                         .output()
                         .expect("Failed to execute command");
